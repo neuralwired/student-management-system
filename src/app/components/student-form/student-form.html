@@ -1,0 +1,125 @@
+<div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
+  <div>
+    <h1 class="h4 mb-1">{{ title() }}</h1>
+    <p class="text-body-secondary mb-0">All changes are stored locally (mock data only).</p>
+  </div>
+
+  <a class="btn btn-outline-secondary" [routerLink]="['/students']">Back to List</a>
+</div>
+
+@if (alert(); as alert) {
+  <div class="alert mt-3 mb-0 d-flex align-items-center justify-content-between" [class]="'alert-' + alert.kind" role="alert">
+    <div class="me-3">{{ alert.message }}</div>
+    <button type="button" class="btn-close" aria-label="Close alert" (click)="dismissAlert()"></button>
+  </div>
+}
+
+<div class="card mt-3">
+  <div class="card-body">
+    @if (isLoading()) {
+      <div class="d-flex align-items-center gap-2" aria-live="polite" aria-busy="true">
+        <div class="spinner-border spinner-border-sm" role="status" aria-label="Loading"></div>
+        <span class="text-body-secondary">Loading student…</span>
+      </div>
+    } @else {
+      <form class="row g-3" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="col-12 col-md-6">
+          <label for="name" class="form-label">Name</label>
+          <input
+            id="name"
+            type="text"
+            class="form-control"
+            formControlName="name"
+            autocomplete="name"
+            [class.is-invalid]="form.controls.name.touched && form.controls.name.invalid"
+          />
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+            <div class="invalid-feedback">Name is required.</div>
+          }
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            autocomplete="email"
+            [class.is-invalid]="form.controls.email.touched && form.controls.email.invalid"
+          />
+          @if (form.controls.email.touched && form.controls.email.invalid) {
+            <div class="invalid-feedback">
+              @if (form.controls.email.errors?.['required']) {
+                Email is required.
+              } @else {
+                Enter a valid email.
+              }
+            </div>
+          }
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="course" class="form-label">Course</label>
+          <input
+            id="course"
+            type="text"
+            class="form-control"
+            formControlName="course"
+            autocomplete="organization-title"
+            [class.is-invalid]="form.controls.course.touched && form.controls.course.invalid"
+          />
+          @if (form.controls.course.touched && form.controls.course.invalid) {
+            <div class="invalid-feedback">Course is required.</div>
+          }
+        </div>
+
+        <div class="col-12 col-md-3">
+          <label for="marks" class="form-label">Marks</label>
+          <input
+            id="marks"
+            type="number"
+            class="form-control"
+            formControlName="marks"
+            inputmode="numeric"
+            min="0"
+            [class.is-invalid]="form.controls.marks.touched && form.controls.marks.invalid"
+          />
+          @if (form.controls.marks.touched && form.controls.marks.invalid) {
+            <div class="invalid-feedback">
+              @if (form.controls.marks.errors?.['required']) {
+                Marks are required.
+              } @else {
+                Marks must be 0 or greater.
+              }
+            </div>
+          }
+        </div>
+
+        <div class="col-12 col-md-3">
+          <label for="result" class="form-label">Result</label>
+          <select
+            id="result"
+            class="form-select"
+            formControlName="result"
+            [class.is-invalid]="form.controls.result.touched && form.controls.result.invalid"
+          >
+            @for (result of results; track result) {
+              <option [value]="result">{{ result }}</option>
+            }
+          </select>
+          @if (form.controls.result.touched && form.controls.result.invalid) {
+            <div class="invalid-feedback">Result is required.</div>
+          }
+        </div>
+
+        <div class="col-12 d-flex justify-content-end gap-2">
+          <a class="btn btn-outline-secondary" [routerLink]="['/students']">Cancel</a>
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isSaving()">
+            @if (isSaving()) { Saving… } @else { Save }
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

@@ -1,0 +1,4 @@
+input,
+select {
+  background-clip: padding-box;
+}

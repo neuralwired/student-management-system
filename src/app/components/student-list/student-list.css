@@ -1,0 +1,9 @@
+th,
+td {
+  white-space: nowrap;
+}
+
+td:nth-child(2),
+th:nth-child(2) {
+  white-space: normal;
+}

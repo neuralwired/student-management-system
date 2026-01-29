@@ -1,0 +1,88 @@
+<div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+  <div>
+    <h1 class="h4 mb-1">Students</h1>
+    <p class="text-body-secondary mb-0">Manage student records with mock data (no backend required).</p>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="button" class="btn btn-outline-secondary" (click)="refresh()" [disabled]="isLoading()">
+      Refresh
+    </button>
+    <a class="btn btn-primary" [routerLink]="['/students/add']">Add Student</a>
+  </div>
+</div>
+
+@if (alert(); as alert) {
+  <div class="alert mt-3 mb-0 d-flex align-items-center justify-content-between" [class]="'alert-' + alert.kind" role="alert">
+    <div class="me-3">{{ alert.message }}</div>
+    <button type="button" class="btn-close" aria-label="Close alert" (click)="dismissAlert()"></button>
+  </div>
+}
+
+<div class="card mt-3">
+  <div class="card-body">
+    @if (isLoading()) {
+      <div class="d-flex align-items-center gap-2" aria-live="polite" aria-busy="true">
+        <div class="spinner-border spinner-border-sm" role="status" aria-label="Loading"></div>
+        <span class="text-body-secondary">Loading students…</span>
+      </div>
+    } @else if (isEmpty()) {
+      <div class="text-center py-5">
+        <h2 class="h6 mb-2">No students yet</h2>
+        <p class="text-body-secondary mb-3">Add your first student to get started.</p>
+        <a class="btn btn-primary" [routerLink]="['/students/add']">Add Student</a>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Student ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Course</th>
+              <th scope="col" class="text-end">Marks</th>
+              <th scope="col">Result</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (student of students(); track student.studentId) {
+              <tr>
+                <td class="text-body-secondary">{{ student.studentId }}</td>
+                <td class="fw-semibold">{{ student.name }}</td>
+                <td>
+                  <a [href]="'mailto:' + student.email" class="link-primary">{{ student.email }}</a>
+                </td>
+                <td>{{ student.course }}</td>
+                <td class="text-end">{{ student.marks }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [class]="student.result === 'Pass' ? 'text-bg-success' : 'text-bg-danger'"
+                  >
+                    {{ student.result }}
+                  </span>
+                </td>
+                <td class="text-end">
+                  <div class="btn-group" role="group" aria-label="Student actions">
+                    <a class="btn btn-sm btn-outline-primary" [routerLink]="['/students/edit', student.studentId]">
+                      Edit
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="confirmAndDelete(student)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>
