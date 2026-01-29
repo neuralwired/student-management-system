@@ -4,7 +4,7 @@
     <p class="text-body-secondary mb-0">All changes are stored locally (mock data only).</p>
   </div>
 
-  <a class="btn btn-outline-secondary" [routerLink]="['/students']">Back to List</a>
+  <a class="btn btn-outline-secondary" [routerLink]="['/']">Back to List</a>
 </div>
 
 @if (alert(); as alert) {
@@ -114,7 +114,7 @@
         </div>
 
         <div class="col-12 d-flex justify-content-end gap-2">
-          <a class="btn btn-outline-secondary" [routerLink]="['/students']">Cancel</a>
+          <a class="btn btn-outline-secondary" [routerLink]="['/']">Cancel</a>
           <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isSaving()">
             @if (isSaving()) { Saving… } @else { Save }
           </button>

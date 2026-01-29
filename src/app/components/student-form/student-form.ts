@@ -62,7 +62,7 @@ export class StudentFormComponent {
       .subscribe({
         next: () => {
           this.alert.set({ kind: 'success', message: id === null ? 'Student added.' : 'Student updated.' });
-          void this.router.navigate(['/students']);
+          void this.router.navigate(['/']);
         },
         error: () => this.alert.set({ kind: 'danger', message: 'Failed to save student.' }),
       });

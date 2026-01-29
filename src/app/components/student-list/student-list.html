@@ -8,7 +8,7 @@
     <button type="button" class="btn btn-outline-secondary" (click)="refresh()" [disabled]="isLoading()">
       Refresh
     </button>
-    <a class="btn btn-primary" [routerLink]="['/students/add']">Add Student</a>
+    <a class="btn btn-primary" [routerLink]="['/add']">Add Student</a>
   </div>
 </div>
 
@@ -30,7 +30,7 @@
       <div class="text-center py-5">
         <h2 class="h6 mb-2">No students yet</h2>
         <p class="text-body-secondary mb-3">Add your first student to get started.</p>
-        <a class="btn btn-primary" [routerLink]="['/students/add']">Add Student</a>
+        <a class="btn btn-primary" [routerLink]="['/add']">Add Student</a>
       </div>
     } @else {
       <div class="table-responsive">
@@ -66,7 +66,7 @@
                 </td>
                 <td class="text-end">
                   <div class="btn-group" role="group" aria-label="Student actions">
-                    <a class="btn btn-sm btn-outline-primary" [routerLink]="['/students/edit', student.studentId]">
+                    <a class="btn btn-sm btn-outline-primary" [routerLink]="['/edit', student.studentId]">
                       Edit
                     </a>
                     <button
