@@ -49,3 +49,7 @@ rules.md
 
 .vscode/
 .angular/
+
+
+.nx/cache
+.nx/workspace-data
